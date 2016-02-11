@@ -53,7 +53,7 @@ public:
 *	ƒƒ“ƒo•Ï”‚Ìprint()‚ğŒÄ‚Ô‚â[‚Â
 */
 template< typename T >
-auto print_impl( T&& t )
+decltype(auto) print_impl( T&& t )
 	-> decltype( t.print() )
 {
 	return t.print();
@@ -63,14 +63,14 @@ auto print_impl( T&& t )
 *	cout ‚·‚é‚â[‚Â
 */
 template< typename T >
-auto print_impl( T&& t )
+decltype(auto) print_impl( T&& t )
 	-> typename std::enable_if_t
 	<
 		!has_print< T >::value &&
 		can_output< T >::value
 	>
 {
-	cout << t << endl;
+	return cout << t << endl;
 }
 
 /*
@@ -87,7 +87,7 @@ auto print_impl( T&& )
 }
 
 template< typename T >
-void print( T&& t )
+decltype(auto) print( T&& t )
 {
 	print_impl( t );
 }
